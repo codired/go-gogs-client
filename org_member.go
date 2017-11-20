@@ -29,3 +29,9 @@ func (c *Client) AddMemberToOrganizationTeam(org, team, user string) error {
 
 	return err
 }
+
+func (c *Client) RemoveMemberFromOrganizationTeam(org, team, user string) error {
+	_, err := c.getResponse("GET", fmt.Sprintf("/orgs/%s/teams/%s/remove/%s", org, team, user), jsonHeader, nil)
+
+	return err
+}
