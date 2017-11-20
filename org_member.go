@@ -22,3 +22,10 @@ func (c *Client) AddOrgMembership(org, user string, opt AddOrgMembershipOption) 
 	_, err = c.getResponse("PUT", fmt.Sprintf("/orgs/%s/membership/%s", org, user), jsonHeader, bytes.NewReader(body))
 	return err
 }
+
+func (c *Client) AddMemberToOrganization(org, team, user string) error {
+
+	_, err := c.getResponse("GET", fmt.Sprintf("/orgs/%s/teams/%s/add/%s", org, team, user), jsonHeader, nil)
+
+	return err
+}
