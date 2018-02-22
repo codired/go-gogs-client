@@ -16,11 +16,13 @@ type MarkdownOption struct {
 	Context string
 }
 
-func (c *Client) Markdown(opt MarkdownOption) error {
+func (c *Client) Markdown(opt MarkdownOption) ([]byte, error) {
 	body, err := json.Marshal(&opt)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	_, err = c.getResponse("POST", fmt.Sprintf("/markdown"), jsonHeader, bytes.NewReader(body))
-	return err
+
+	bs, err := c.getResponse("POST", fmt.Sprintf("/markdown"), jsonHeader, bytes.NewReader(body))
+
+	return bs, err
 }
