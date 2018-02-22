@@ -4,8 +4,23 @@
 
 package gogs
 
+import (
+	"encoding/json"
+	"fmt"
+	"bytes"
+)
+
 type MarkdownOption struct {
 	Text    string
 	Mode    string
 	Context string
+}
+
+func (c *Client) Markdown(opt MarkdownOption) error {
+	body, err := json.Marshal(&opt)
+	if err != nil {
+		return err
+	}
+	_, err = c.getResponse("POST", fmt.Sprintf("/markdown"), jsonHeader, bytes.NewReader(body))
+	return err
 }
